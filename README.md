@@ -26,7 +26,7 @@ This project covers the end-to-end process of building, training, and deploying 
 
 ## Tools and Technologies
 
-- MLflow: Experiment tracking, model management, and deployment.
+- MLOPs' tool (MLflow/Evidently): Experiment tracking, model management, and deployment.
 - Docker: Containerization for model deployment.
 - GitHub Actions: CI/CD pipeline for automated testing and deployment.
 - pandas, scikit-learn: Data manipulation and machine learning libraries.

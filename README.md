@@ -26,8 +26,15 @@ This project covers the end-to-end process of building, training, and deploying 
 
 ## Tools and Technologies
 
-- MLOPs' tool (MLflow/Evidently): Experiment tracking, model management, and deployment.
+- MLOPs' tool (MLflow/Evidently): Experiment tracking, model management, and deployment. (https://www.evidentlyai.com)
+- Flowchart: Project planning, tracking progression (https://whimsical.com)
 - Docker: Containerization for model deployment.
 - GitHub Actions: CI/CD pipeline for automated testing and deployment.
 - pandas, scikit-learn: Data manipulation and machine learning libraries.
 - Flask/FastAPI: Model-serving API for inference.
+
+## Setup the python environment
+
+- create environment: python -m venv venv
+- activate environment: venv/Scrips/activate
+- download packages/libraries: pip install -r requirements.txt

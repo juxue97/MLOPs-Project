@@ -9,6 +9,7 @@ MONGO_DB_COLLECTION: str = os.getenv("MONGO_DB_COLLECTION", "visa_data")
 # Common Configs
 FILE_NAME: str = "usvisa.csv"
 MODEL_FILE_NAME: str = "model.pkl"
+SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
 
 # Training Pipeline Configs
 PIPELINE_NAME: str = "usvisa"
@@ -21,3 +22,8 @@ DATA_INGESTION_INGESTED_DIR: str = "ingested"
 TRAIN_TEST_SPLIT_RATIO: float = 0.75
 TRAIN_FILE_NAME: str = "train.csv"
 TEST_FILE_NAME: str = "test.csv"
+
+# Data Validation Configs
+DATA_VALIDATION_DIR_NAME: str = "data_validation"
+DATA_VALIDATION_DRIFT_REPORT_DIR: str = "drift_report"
+DATA_VALIDATION_DRIFT_REPORT_FILE_NAME: str = "report.yaml"

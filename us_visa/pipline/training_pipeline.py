@@ -1,7 +1,8 @@
 import sys
 
 from us_visa.components.data_ingestion import DataIngestion
-from us_visa.entity.config_entity import DataIngestionConfig
+from us_visa.components.data_validation import DataValidation
+from us_visa.entity.config_entity import DataIngestionConfig, DataValidationConfig
 from us_visa.logger import logging
 from us_visa.entity.artifact_entity import (DataIngestionArtifact,
                                             DataTransformationArtifact,
@@ -16,6 +17,7 @@ class TrainPipeline:
     def __init__(self):
         try:
             self.dataIngestionConfig = DataIngestionConfig()
+            self.dataValidationConfig = DataValidationConfig()
         except Exception as e:
             raise USvisaException(e, sys) from e
 
@@ -31,9 +33,17 @@ class TrainPipeline:
         except Exception as e:
             raise USvisaException(e, sys) from e
 
-    def _start_data_validation(self) -> DataValidationArtifact:
+    def _start_data_validation(self, dataIngestionArtifact: DataIngestionArtifact) -> DataValidationArtifact:
         try:
-            pass
+            logging.info("Running TrainingPipeline: data validation")
+            dataValidation = DataValidation(
+                dataIngestionArtifact=dataIngestionArtifact,
+                dataValidationConfig=self.dataValidationConfig,
+            )
+            dataValidationArtifact = dataValidation.initiate_data_validation()
+            logging.info("Complete Process: data validation")
+
+            return dataValidationArtifact
         except Exception as e:
             raise USvisaException(e, sys) from e
 
@@ -61,6 +71,9 @@ class TrainPipeline:
             dataIngestionArtifact: DataIngestionArtifact = self._start_data_ingestion()
 
             # Start data validation:
+            dataValidationArtifact: DataValidationArtifact = self._start_data_validation(
+                dataIngestionArtifact=dataIngestionArtifact
+            )
 
             # Start data transformation:
 

@@ -9,7 +9,9 @@ class DataIngestionArtifact:
 
 @dataclass
 class DataValidationArtifact:
-    pass
+    validationStatus: bool
+    message: str
+    driftReportFilePath: str
 
 
 @dataclass

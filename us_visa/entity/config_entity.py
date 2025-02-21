@@ -29,3 +29,13 @@ class DataIngestionConfig:
         dataIngestionDir, DATA_INGESTION_INGESTED_DIR, TRAIN_FILE_NAME)
     testFilePath: str = os.path.join(
         dataIngestionDir, DATA_INGESTION_INGESTED_DIR, TEST_FILE_NAME)
+
+
+@dataclass
+class DataValidationConfig:
+    dataValidationDir: str = os.path.join(
+        trainingPipelineConfig.artifactDir, DATA_VALIDATION_DIR_NAME
+    )
+    driftReportFilePath: str = os.path.join(
+        dataValidationDir, DATA_VALIDATION_DRIFT_REPORT_DIR, DATA_VALIDATION_DRIFT_REPORT_FILE_NAME
+    )

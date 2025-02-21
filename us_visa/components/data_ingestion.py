@@ -127,4 +127,4 @@ class DataIngestion:
             return dataIngestionArtifact
 
         except Exception as e:
-            raise USvisaException(e, sys)
+            raise USvisaException(e, sys) from e

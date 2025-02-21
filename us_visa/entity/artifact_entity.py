@@ -16,7 +16,9 @@ class DataValidationArtifact:
 
 @dataclass
 class DataTransformationArtifact:
-    pass
+    transformedObjectFilePath: str
+    transformedTrainFilePath: str
+    transformedTestFilePath: str
 
 
 @dataclass

@@ -1,8 +1,9 @@
 import sys
 
 from us_visa.components.data_ingestion import DataIngestion
+from us_visa.components.data_transformation import DataTransformation
 from us_visa.components.data_validation import DataValidation
-from us_visa.entity.config_entity import DataIngestionConfig, DataValidationConfig
+from us_visa.entity.config_entity import DataIngestionConfig, DataTransformationConfig, DataValidationConfig
 from us_visa.logger import logging
 from us_visa.entity.artifact_entity import (DataIngestionArtifact,
                                             DataTransformationArtifact,
@@ -18,6 +19,7 @@ class TrainPipeline:
         try:
             self.dataIngestionConfig = DataIngestionConfig()
             self.dataValidationConfig = DataValidationConfig()
+            self.dataTransformationConfig = DataTransformationConfig()
         except Exception as e:
             raise USvisaException(e, sys) from e
 
@@ -47,9 +49,18 @@ class TrainPipeline:
         except Exception as e:
             raise USvisaException(e, sys) from e
 
-    def _start_data_transformation(self) -> DataTransformationArtifact:
+    def _start_data_transformation(self, dataIngestionArtifact: DataIngestionArtifact, dataValidationArtifact: DataValidationArtifact) -> DataTransformationArtifact:
         try:
-            pass
+            logging.info("Running TrainingPipeline: data transformation")
+            dataTransformation = DataTransformation(
+                dataIngestionArtifact=dataIngestionArtifact,
+                dataValidationArtifact=dataValidationArtifact,
+                dataTransformationConfig=self.dataTransformationConfig,
+            )
+            dataTransformationArtifact = dataTransformation.initiate_data_transformation()
+            logging.info("Complete Process: data transformation")
+
+            return dataTransformationArtifact
         except Exception as e:
             raise USvisaException(e, sys) from e
 
@@ -76,6 +87,10 @@ class TrainPipeline:
             )
 
             # Start data transformation:
+            dataTransformationArtifact: DataTransformationArtifact = self._start_data_transformation(
+                dataIngestionArtifact=dataIngestionArtifact,
+                dataValidationArtifact=dataValidationArtifact,
+            )
 
             # Start model training:
 

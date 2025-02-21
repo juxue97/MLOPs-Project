@@ -10,6 +10,7 @@ MONGO_DB_COLLECTION: str = os.getenv("MONGO_DB_COLLECTION", "visa_data")
 FILE_NAME: str = "usvisa.csv"
 MODEL_FILE_NAME: str = "model.pkl"
 SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
+PREPROCSSING_OBJECT_FILE_NAME = "preprocessing.pkl"
 
 # Training Pipeline Configs
 PIPELINE_NAME: str = "usvisa"
@@ -27,3 +28,8 @@ TEST_FILE_NAME: str = "test.csv"
 DATA_VALIDATION_DIR_NAME: str = "data_validation"
 DATA_VALIDATION_DRIFT_REPORT_DIR: str = "drift_report"
 DATA_VALIDATION_DRIFT_REPORT_FILE_NAME: str = "report.yaml"
+
+# Data Transformation Configs
+DATA_TRANSFORMATION_DIR_NAME: str = "data_transformation"
+DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR: str = "transformed"
+DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR: str = "transformed_object"

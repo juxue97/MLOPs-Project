@@ -3,15 +3,16 @@ import kagglehub
 import os
 import pandas as pd
 
-from typing import Any, Hashable, Union
+from typing import Union
 
 import yaml
 
 from us_visa.exception import USvisaException
 
-def download_dataset(dataset: str, 
-                     extensions:tuple[int]=(".csv", ".json", ".xlsx"),
-                    ) -> Union[str|Exception]:
+
+def download_dataset(dataset: str,
+                     extensions: tuple[int] = (".csv", ".json", ".xlsx"),
+                     ) -> Union[str | Exception]:
     """
     Downloads a dataset using kagglehub and returns the path to the first file
     matching the specified extensions.
@@ -31,13 +32,14 @@ def download_dataset(dataset: str,
         for file in os.listdir(path):
             if file.endswith(extensions):
                 return os.path.join(path, file)
-        
+
         return Exception("no matching file found")
-     
+
     except Exception as e:
         return Exception(f"error occur while attempt to download dataset: {e}")
 
-def read_dataset(file_path: str) -> Union[pd.DataFrame|str|None]:
+
+def read_dataset(file_path: str) -> Union[pd.DataFrame | str | None]:
     """
     Reads a dataset from a specified file path and returns it as a DataFrame.
 
@@ -62,9 +64,10 @@ def read_dataset(file_path: str) -> Union[pd.DataFrame|str|None]:
             return "file_path cannot be empty!"
 
         return df
-    
+
     else:
         return None
+
 
 def read_yaml_file(file_path: str) -> dict:
     try:
@@ -73,7 +76,8 @@ def read_yaml_file(file_path: str) -> dict:
 
     except Exception as e:
         raise USvisaException(e, sys) from e
-    
+
+
 def write_yaml_file(file_path: str, content: object, replace: bool = False) -> None:
     try:
         if replace:

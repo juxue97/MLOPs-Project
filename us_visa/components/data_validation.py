@@ -16,7 +16,7 @@ class DataValidation():
         try:
             self.dataIngestionArtifact = dataIngestionArtifact
             self.dataValidationConfig = dataValidationConfig
-            self._schema_config = read_yaml_file(file_path=SCHEMA_FILE_PATH)
+            self._schemaConfig = read_yaml_file(file_path=SCHEMA_FILE_PATH)
         except Exception as e:
             raise USvisaException(e, sys)
 
@@ -31,7 +31,7 @@ class DataValidation():
     def _validate_number_of_columns(self, dataFrame: pd.DataFrame) -> bool:
         logging.info("Validating number of dataframe columns")
         try:
-            return len(dataFrame.columns) == len(self._schema_config["columns"])
+            return len(dataFrame.columns) == len(self._schemaConfig["columns"])
         except Exception as e:
             raise USvisaException(e, sys)
 
@@ -41,14 +41,14 @@ class DataValidation():
             dfColumns = dataFrame.columns
             missing_numerical_columns = []
             missing_categorical_columns = []
-            for column in self._schema_config["numerical_columns"]:
+            for column in self._schemaConfig["numerical_columns"]:
                 if column not in dfColumns:
                     missing_numerical_columns.append(column)
             if len(missing_numerical_columns) > 0:
                 logging.info(
                     f"Missing numerical column: {missing_numerical_columns}")
 
-            for column in self._schema_config["categorical_columns"]:
+            for column in self._schemaConfig["categorical_columns"]:
                 if column not in dfColumns:
                     missing_categorical_columns.append(column)
             if len(missing_categorical_columns) > 0:
@@ -139,4 +139,4 @@ class DataValidation():
                 f"Data validation artifact: {dataValidationArtifact}")
             return dataValidationArtifact
         except Exception as e:
-            raise USvisaException(e, sys)
+            raise USvisaException(e, sys) from e

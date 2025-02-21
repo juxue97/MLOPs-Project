@@ -39,3 +39,19 @@ class DataValidationConfig:
     driftReportFilePath: str = os.path.join(
         dataValidationDir, DATA_VALIDATION_DRIFT_REPORT_DIR, DATA_VALIDATION_DRIFT_REPORT_FILE_NAME
     )
+
+
+@dataclass
+class DataTransformationConfig:
+    dataTransformationDir: str = os.path.join(
+        trainingPipelineConfig.artifactDir, DATA_TRANSFORMATION_DIR_NAME
+    )
+    transformedObjectFilePath: str = os.path.join(
+        dataTransformationDir, DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR, PREPROCSSING_OBJECT_FILE_NAME
+    )
+    transformedTrainFilePath: str = os.path.join(
+        dataTransformationDir, TRAIN_FILE_NAME.replace("csv", 'npy')
+    )
+    transformedTestFilePath: str = os.path.join(
+        dataTransformationDir, TEST_FILE_NAME.replace("csv", 'npy')
+    )

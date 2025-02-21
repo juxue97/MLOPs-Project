@@ -1,6 +1,23 @@
 import os
 
-## MongoDB Configs
-MongoDBUrl = os.getenv("MONGODB_URL_KEY","mongodb://root:rootpass@localhost:27017/?authSource=admin")
-MongoDBName = os.getenv("MONGODB_DB_NAME","US_VISA")
-MongoDBCollection = os.getenv("MONGO_DB_COLLECTION","visa_data")
+# MongoDB Configs
+MONGO_DB_URL: str = os.getenv(
+    "MONGODB_URL_KEY", "mongodb://root:rootpass@localhost:27017/?authSource=admin")
+MONGO_DB_NAME: str = os.getenv("MONGODB_DB_NAME", "US_VISA")
+MONGO_DB_COLLECTION: str = os.getenv("MONGO_DB_COLLECTION", "visa_data")
+
+# Common Configs
+FILE_NAME: str = "usvisa.csv"
+MODEL_FILE_NAME: str = "model.pkl"
+
+# Training Pipeline Configs
+PIPELINE_NAME: str = "usvisa"
+ARTIFACT_DIR: str = "artifact"
+
+# Data Ingestion Configs
+DATA_INGESTION_DIR_NAME: str = "data_ingestion"
+DATA_INGESTION_FEATURE_STORE_DIR: str = "feature_store"
+DATA_INGESTION_INGESTED_DIR: str = "ingested"
+TRAIN_TEST_SPLIT_RATIO: float = 0.75
+TRAIN_FILE_NAME: str = "train.csv"
+TEST_FILE_NAME: str = "test.csv"

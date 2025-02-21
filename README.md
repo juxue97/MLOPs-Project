@@ -38,3 +38,13 @@ This project covers the end-to-end process of building, training, and deploying 
 - create environment: python -m venv venv
 - activate environment: venv/Scrips/activate
 - download packages/libraries: pip install -r requirements.txt
+
+## Current task:
+
+- setup the training pipeline
+  - data ingestion -> data ingestion artifact
+  - data validation (data ingestion artifact) -> data validation artifact & status
+  - data transformation (data ingestion artifact, data validation artifact & status) -> data transformation artifact
+  - model training (data transformation artifact) -> model training artifact
+  - model evaluation (data ingestion artifact, model training artifact) -> model acceptanace status
+  - model push2cloud (mode acceptance status) - > s3

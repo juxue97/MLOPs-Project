@@ -22,8 +22,17 @@ class DataTransformationArtifact:
 
 
 @dataclass
-class ModelTrainingArtifact:
-    pass
+class ClassificationMetricArtifact:
+    accuracy: float
+    f1_score: float
+    precision_score: float
+    recall_score: float
+
+
+@dataclass
+class ModelTrainerArtifact:
+    trainedModelFilePath: str
+    metricArtifact: ClassificationMetricArtifact
 
 
 @dataclass

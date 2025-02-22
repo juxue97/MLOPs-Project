@@ -55,3 +55,15 @@ class DataTransformationConfig:
     transformedTestFilePath: str = os.path.join(
         dataTransformationDir, TEST_FILE_NAME.replace("csv", 'npy')
     )
+
+
+@dataclass
+class ModelTrainerConfig:
+    modelTrainerDir: str = os.path.join(
+        trainingPipelineConfig.artifactDir, MODEL_TRAINER_DIR_NAME
+    )
+    trainedModelFilePath: str = os.path.join(
+        modelTrainerDir, MODEL_TRAINER_TRAINED_MODEL_DIR, MODEL_FILE_NAME
+    )
+    expectedAccuracy: float = MODEL_TRAINER_EXPECTED_SCORE
+    modelConfigFilePath: str = MODEL_TRAINER_MODEL_CONFIG_FILE_PATH

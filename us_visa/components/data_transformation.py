@@ -6,7 +6,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler, OrdinalEncoder,
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from imblearn.combine import SMOTEENN
-from typing import Any
+from typing import Any, Tuple
 
 from us_visa.constants import SCHEMA_FILE_PATH
 from us_visa.entity.artifact_entity import DataIngestionArtifact, DataTransformationArtifact, DataValidationArtifact
@@ -42,7 +42,7 @@ class DataTransformation:
         except Exception as e:
             raise USvisaException(e, sys)
 
-    def _preprocess_data(self, dataFrame: pd.DataFrame) -> pd.DataFrame:
+    def _preprocess_data(self, dataFrame: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
         logging.info("Performing data preprocessing")
         try:
             # Separate X and y
@@ -105,7 +105,7 @@ class DataTransformation:
         except Exception as e:
             raise USvisaException(e, sys)
 
-    def _data_resampling(self, X: np.ndarray, y: pd.DataFrame) -> pd.DataFrame | Any:
+    def _data_resampling(self, X: np.ndarray, y: pd.DataFrame) -> Tuple[pd.DataFrame | Any, pd.DataFrame | Any]:
         logging.info("Performing data resampling")
         try:
             smt = SMOTEENN(sampling_strategy='minority')

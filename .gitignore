@@ -57,3 +57,5 @@ data/
 
 # Model files (optional, as models can be tracked in MLflow)
 models/
+*.npy
+*.pkl

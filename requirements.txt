@@ -23,4 +23,5 @@ uvicorn
 jinja2
 python-multipart
 kagglehub
+python-dotenv
 -e .

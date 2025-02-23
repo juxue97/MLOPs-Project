@@ -1,10 +1,16 @@
 import os
+from dotenv import load_dotenv
+
+# Relative path (if .env is in a parent folder)
+env_path = "./.env"
+
+load_dotenv(env_path)  # Load the .env file
 
 # MongoDB Configs
 MONGO_DB_URL: str = os.getenv(
-    "MONGODB_URL_KEY", "mongodb://root:rootpass@localhost:27017/?authSource=admin")
-MONGO_DB_NAME: str = os.getenv("MONGODB_DB_NAME", "US_VISA")
-MONGO_DB_COLLECTION: str = os.getenv("MONGO_DB_COLLECTION", "visa_data")
+    "MONGO_DB_URL_KEY", "DB-URL")
+MONGO_DB_NAME: str = os.getenv("MONGO_DB_NAME", "DB-NAME")
+MONGO_DB_COLLECTION: str = os.getenv("MONGO_DB_COLLECTION", "DB-COL")
 
 # AWS S3 Configs
 AWS_ACCESS_KEY_ID = os.getenv(
@@ -54,4 +60,4 @@ MODEL_TRAINER_MODEL_CONFIG_FILE_PATH: str = os.path.join(
 # Model Evaluation Configs
 
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
-MODEL_BUCKET_NAME = "usvisa-model2025"
+MODEL_BUCKET_NAME = "ml-models-2025"

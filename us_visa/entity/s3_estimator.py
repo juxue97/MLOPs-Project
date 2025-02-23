@@ -1,9 +1,9 @@
 import sys
 from pandas import DataFrame
 
-from us_visa.cloud_storage.aws_storage import SimpleStorageService
 from us_visa.exception import USvisaException
 from us_visa.entity.estimator import USvisaModel
+from us_visa.store.aws_s3_storage import SimpleStorageService
 
 
 class USVisaEstimator:
@@ -23,7 +23,7 @@ class USVisaEstimator:
 
     def is_model_present(self, modelPath):
         try:
-            return self.s3.s3_key_path_available(bucketName=self.bucketName, s3_key=modelPath)
+            return self.s3.s3_key_path_available(bucket_name=self.bucketName, s3_key=modelPath)
         except USvisaException as e:
             print(e)
             return False
@@ -34,7 +34,7 @@ class USVisaEstimator:
         :return:
         """
 
-        return self.s3.load_model(self.modelPath, bucketName=self.bucketName)
+        return self.s3.load_model(self.modelPath, bucket_name=self.bucketName)
 
     def save_model(self, from_file, remove: bool = False) -> None:
         """

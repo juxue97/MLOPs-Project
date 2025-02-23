@@ -40,6 +40,8 @@ class ModelEvaluator:
 
     def _get_best_model(self) -> Optional[USVisaEstimator]:
         try:
+            logging.info("Retrieving model from s3 storage")
+
             bucketName = self.modelEvaluationConfig.bucketName
             modelPath = self.modelEvaluationConfig.s3ModelKeyPath
             estimator = USVisaEstimator(
@@ -54,13 +56,15 @@ class ModelEvaluator:
 
     def _evaluate_model(self) -> EvaluateModelResponse:
         try:
+            logging.info("Evaluating trained model and previous model")
+
             currentYear = date.today().year
             testDf = pd.read_csv(self.dataIngestionArtifact.testFilePath)
             testDf["company_age"] = currentYear - testDf["yr_of_estab"]
 
             targetColumn = self._schemaConfig["target_columns"]
-            X, y = testDf.drop(columns=targetColumn,
-                               axis=1), testDf[:, :-1]
+            X = testDf.drop(columns=targetColumn, axis=1)
+            y = testDf[targetColumn]
             y = y.replace(
                 TargetValueMapping()._asdict()
             )
@@ -70,7 +74,7 @@ class ModelEvaluator:
             bestModelF1Score = None
             bestModel = self._get_best_model()
             if bestModel is not None:
-                yHatBestModel = bestModel.predict(x)
+                yHatBestModel = bestModel.predict(X)
                 bestModelF1Score = f1_score(y, yHatBestModel)
 
             tmpBestModelScore = 0 if bestModelF1Score is None else bestModelF1Score

@@ -15,6 +15,9 @@ env/
 .venv/
 .env/
 
+# secret file
+.env
+
 # MLflow specific
 mlruns/
 mlflow.db

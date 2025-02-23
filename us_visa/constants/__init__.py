@@ -6,6 +6,15 @@ MONGO_DB_URL: str = os.getenv(
 MONGO_DB_NAME: str = os.getenv("MONGODB_DB_NAME", "US_VISA")
 MONGO_DB_COLLECTION: str = os.getenv("MONGO_DB_COLLECTION", "visa_data")
 
+# AWS S3 Configs
+AWS_ACCESS_KEY_ID = os.getenv(
+    "AWS_ACCESS_KEY_ID_ENV_KEY", "please-get-your-own"
+)
+AWS_SECRET_ACCESS_KEY = os.getenv(
+    "AWS_SECRET_ACCESS_KEY_ENV_KEY", "please-get-your-own"
+)
+REGION_NAME = os.getenv("AWS_REGION_NAME", "please-get-your-own")
+
 # Common Configs
 FILE_NAME: str = "usvisa.csv"
 SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
@@ -41,3 +50,8 @@ MODEL_TRAINER_EXPECTED_SCORE: float = 0.8
 MODEL_TRAINER_MODEL_CONFIG_FILE_PATH: str = os.path.join(
     "config", "model.yaml"
 )
+
+# Model Evaluation Configs
+
+MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
+MODEL_BUCKET_NAME = "usvisa-model2025"

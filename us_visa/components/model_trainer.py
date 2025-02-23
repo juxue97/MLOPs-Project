@@ -89,6 +89,9 @@ class ModelTrainer:
                 trainedModelFilePath=self.modelTrainerConfig.trainedModelFilePath,
                 metricArtifact=metricArtifact,
             )
+
+            logging.info(
+                f"Model training artifact: {modelTrainerArtifact}")
             return modelTrainerArtifact
         except Exception as e:
             raise USvisaException(e, sys) from e

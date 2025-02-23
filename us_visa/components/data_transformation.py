@@ -50,7 +50,7 @@ class DataTransformation:
             drop_cols = self._schemaConfig["drop_columns"]
 
             inputFeaturesDf = dataFrame.drop(
-                columns=target_col
+                columns=target_col, axis=1
             )
             targetFeatureDf = dataFrame[self._schemaConfig["target_columns"]]
 
@@ -62,7 +62,7 @@ class DataTransformation:
 
             # Drop certain features
             inputFeaturesDf.drop(
-                columns=drop_cols, inplace=True
+                columns=drop_cols, inplace=True, axis=1
             )
 
             targetFeatureDf = targetFeatureDf.replace(

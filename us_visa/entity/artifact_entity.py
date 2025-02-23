@@ -36,5 +36,13 @@ class ModelTrainerArtifact:
 
 
 @dataclass
+class ModelEvaluationArtifact:
+    isModelAccepted: bool
+    changedAccuracy: float
+    s3ModelPath: str
+    trainedModelPath: str
+
+
+@dataclass
 class ModelPusherArtifact:
     pass

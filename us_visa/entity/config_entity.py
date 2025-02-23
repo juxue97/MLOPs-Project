@@ -67,3 +67,10 @@ class ModelTrainerConfig:
     )
     expectedAccuracy: float = MODEL_TRAINER_EXPECTED_SCORE
     modelConfigFilePath: str = MODEL_TRAINER_MODEL_CONFIG_FILE_PATH
+
+
+@dataclass
+class ModelEvaluationConfig:
+    changedThresholdScore: float = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE
+    bucketName: str = MODEL_BUCKET_NAME
+    s3ModelKeyPath: str = MODEL_FILE_NAME

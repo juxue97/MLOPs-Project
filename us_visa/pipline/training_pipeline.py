@@ -3,12 +3,13 @@ import sys
 from us_visa.components.data_ingestion import DataIngestion
 from us_visa.components.data_transformation import DataTransformation
 from us_visa.components.data_validation import DataValidation
+from us_visa.components.model_evaluation import ModelEvaluator
 from us_visa.components.model_trainer import ModelTrainer
-from us_visa.entity.config_entity import DataIngestionConfig, DataTransformationConfig, DataValidationConfig, ModelTrainerConfig
+from us_visa.entity.config_entity import DataIngestionConfig, DataTransformationConfig, DataValidationConfig, ModelEvaluationConfig, ModelTrainerConfig
 from us_visa.logger import logging
 from us_visa.entity.artifact_entity import (DataIngestionArtifact,
                                             DataTransformationArtifact,
-                                            DataValidationArtifact,
+                                            DataValidationArtifact, ModelEvaluationArtifact,
                                             ModelPusherArtifact,
                                             ModelTrainerArtifact
                                             )
@@ -22,6 +23,7 @@ class TrainPipeline:
             self.dataValidationConfig = DataValidationConfig()
             self.dataTransformationConfig = DataTransformationConfig()
             self.modelTrainerConfig = ModelTrainerConfig()
+            self.modelEvaluationConfig = ModelEvaluationConfig()
         except Exception as e:
             raise USvisaException(e, sys) from e
 
@@ -69,12 +71,29 @@ class TrainPipeline:
     def _start_model_trainer(self, dataTransformationArtifact: DataTransformationArtifact) -> ModelTrainerArtifact:
         try:
             logging.info("Running TrainingPipeline: Model Training")
-            modelTrainer = ModelTrainer(dataTransformationArtifact=dataTransformationArtifact,
-                                        modelTrainerConfig=self.modelTrainerConfig)
+            modelTrainer = ModelTrainer(
+                dataTransformationArtifact=dataTransformationArtifact,
+                modelTrainerConfig=self.modelTrainerConfig,
+            )
             modelTrainerArtifact = modelTrainer.initiate_model_trainer()
             logging.info("Complete Process: Model Training")
 
             return modelTrainerArtifact
+        except Exception as e:
+            raise USvisaException(e, sys) from e
+
+    def _start_model_evaluation(self, dataIngestionArtifact: DataIngestionArtifact, modelTrainerArtifact: ModelTrainerArtifact) -> ModelEvaluationArtifact:
+        try:
+            logging.info("Running TrainingPipeline: Model Evaluation")
+            modelEvaluator = ModelEvaluator(
+                dataIngestionArtifact=dataIngestionArtifact,
+                modelTrainerArtifact=modelTrainerArtifact,
+                modelEvaluationConfig=self.modelEvaluationConfig,
+            )
+            modelEvaluationArtifact = modelEvaluator.initiate_model_evaluation()
+            logging.info("Complete Process: Model Evaluation")
+
+            return modelEvaluationArtifact
         except Exception as e:
             raise USvisaException(e, sys) from e
 
@@ -106,7 +125,10 @@ class TrainPipeline:
             )
 
             # Start model evaluation:
-
+            modelEvaluateArtifact: ModelEvaluationArtifact = self._start_model_evaluation(
+                dataIngestionArtifact=dataIngestionArtifact,
+                modelTrainerArtifact=modelTrainerArtifact,
+            )
             modelStatus = False
             if modelStatus:
                 # Start model pushing:

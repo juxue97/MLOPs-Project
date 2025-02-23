@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from uvicorn import run as app_run
 
 from server.router import routerTrain
+from us_visa.constants import APP_HOST, APP_PORT
 
 
 # Initialize fastapi client
@@ -28,3 +30,6 @@ async def health_check():
         raise Exception(f"Error starting http server : {e}")
 
 app.include_router(routerTrain)
+
+if __name__ == "__main__":
+    app_run(app=app, host=APP_HOST, port=APP_PORT)

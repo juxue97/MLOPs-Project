@@ -10,6 +10,10 @@ routerTrain.add_api_route(
     path="/train",
     endpoint=train,
     methods=["GET"],
+    responses={
+        200: {"description": "Training started successfully"},
+        500: {"description": "Server error while training"},
+    },
 )
 
 # routerPred.add_api_route(

@@ -4,8 +4,15 @@ from us_visa.components.data_ingestion import DataIngestion
 from us_visa.components.data_transformation import DataTransformation
 from us_visa.components.data_validation import DataValidation
 from us_visa.components.model_evaluation import ModelEvaluator
+from us_visa.components.model_pusher import ModelPusher
 from us_visa.components.model_trainer import ModelTrainer
-from us_visa.entity.config_entity import DataIngestionConfig, DataTransformationConfig, DataValidationConfig, ModelEvaluationConfig, ModelTrainerConfig
+from us_visa.entity.config_entity import (DataIngestionConfig,
+                                          DataTransformationConfig,
+                                          DataValidationConfig,
+                                          ModelEvaluationConfig,
+                                          ModelPusherConfig,
+                                          ModelTrainerConfig,
+                                          )
 from us_visa.logger import logging
 from us_visa.entity.artifact_entity import (DataIngestionArtifact,
                                             DataTransformationArtifact,
@@ -24,6 +31,7 @@ class TrainPipeline:
             self.dataTransformationConfig = DataTransformationConfig()
             self.modelTrainerConfig = ModelTrainerConfig()
             self.modelEvaluationConfig = ModelEvaluationConfig()
+            self.modelPusherConfig = ModelPusherConfig()
         except Exception as e:
             raise USvisaException(e, sys) from e
 
@@ -97,14 +105,23 @@ class TrainPipeline:
         except Exception as e:
             raise USvisaException(e, sys) from e
 
-    def _start_model_pushing(self) -> ModelPusherArtifact:
+    def _start_model_pushing(self, modelEvaluationArtifact: ModelEvaluationArtifact) -> ModelPusherArtifact:
         try:
-            pass
+            logging.info("Running TrainingPipeline: Model Pushing")
+            modelPusher = ModelPusher(
+                modelPusherConfig=self.modelPusherConfig,
+                modelEvaluationArtifact=modelEvaluationArtifact)
+            modelPusherArtifact = modelPusher.initiate_model_pushing()
+            logging.info("Complete Process: Model Pushing")
+
+            return modelPusherArtifact
+
         except Exception as e:
             raise USvisaException(e, sys) from e
 
     def run_pipeline(self) -> None:
         try:
+            logging.info("Starting training pipeline")
             # Start data ingestion:
             dataIngestionArtifact: DataIngestionArtifact = self._start_data_ingestion()
 
@@ -129,10 +146,15 @@ class TrainPipeline:
                 dataIngestionArtifact=dataIngestionArtifact,
                 modelTrainerArtifact=modelTrainerArtifact,
             )
-            modelStatus = False
-            if modelStatus:
-                # Start model pushing:
-                pass
+
+            if not modelEvaluateArtifact.isModelAccepted:
+                logging.info("Model trained is not accepted")
+                raise Exception("Model trained is not accepted")
+
+            modelPusherArtifact = self._start_model_pushing(
+                modelEvaluationArtifact=modelEvaluateArtifact
+            )
+            logging.info("Complete All Processes")
 
         except Exception as e:
             raise USvisaException(e, sys) from e

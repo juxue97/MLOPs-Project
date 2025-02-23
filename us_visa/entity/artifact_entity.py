@@ -45,4 +45,5 @@ class ModelEvaluationArtifact:
 
 @dataclass
 class ModelPusherArtifact:
-    pass
+    bucketName: str
+    s3ModelPath: str

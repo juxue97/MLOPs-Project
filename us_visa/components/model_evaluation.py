@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import pandas as pd
 from typing import Optional
 from datetime import date
+import numpy as np
 
 from sklearn.metrics import f1_score
 
@@ -62,9 +63,12 @@ class ModelEvaluator:
             testDf = pd.read_csv(self.dataIngestionArtifact.testFilePath)
             testDf["company_age"] = currentYear - testDf["yr_of_estab"]
 
+            # Note that this is a list, not string
             targetColumn = self._schemaConfig["target_columns"]
+
             X = testDf.drop(columns=targetColumn, axis=1)
-            y = testDf[targetColumn]
+            y = testDf[targetColumn[0]]
+
             y = y.replace(
                 TargetValueMapping()._asdict()
             )
@@ -74,7 +78,9 @@ class ModelEvaluator:
             bestModelF1Score = None
             bestModel = self._get_best_model()
             if bestModel is not None:
-                yHatBestModel = bestModel.predict(X)
+                y = np.array(y).ravel().astype(int)
+                yHatBestModel = bestModel.predict(X).astype(int)
+
                 bestModelF1Score = f1_score(y, yHatBestModel)
 
             tmpBestModelScore = 0 if bestModelF1Score is None else bestModelF1Score

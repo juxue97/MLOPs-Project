@@ -17,6 +17,7 @@ env/
 
 # secret file
 .env
+*.ini
 
 # MLflow specific
 mlruns/
@@ -28,6 +29,7 @@ mlflow.db
 *.log
 docker-compose.override.yml
 docker-compose.yml
+mongo_data/
 
 # GitHub Actions
 .github/

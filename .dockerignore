@@ -1,0 +1,56 @@
+# Python-related files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.pyd
+*.sqlite
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+env/
+.venv/
+.env/
+
+# Secret files
+.env
+*.ini
+
+# MLflow specific
+mlruns/
+mlflow.db
+*.mlmodel
+*.db
+
+# Docker
+*.log
+docker-compose.override.yml
+docker-compose.yml
+
+# CI/CD build directories
+/build/
+dist/
+*.egg-info/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Package distribution files
+*.tar.gz
+*.zip
+*.whl
+
+# Data files (optional if your data is large and stored separately)
+data/
+*.csv
+*.tsv
+*.json
+
+# Model files (optional, as models can be tracked in MLflow)
+models/
+*.npy
+*.pkl

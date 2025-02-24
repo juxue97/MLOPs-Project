@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - ./mongo_data:/data/db
+      - mongo_data:/data/db
     networks:
       - my_network
 
@@ -34,6 +34,9 @@ services:
       - mongodb
     networks:
       - my_network
+
+volumes:
+  mongo_data:
 
 networks:
   my_network:

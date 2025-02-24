@@ -55,6 +55,7 @@ Thumbs.db
 
 # Data files (optional if your data is large and stored separately)
 data/
+artifact/
 *.csv
 *.tsv
 *.json

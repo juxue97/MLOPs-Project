@@ -39,12 +39,6 @@ This project covers the end-to-end process of building, training, and deploying 
 - activate environment: venv/Scrips/activate
 - download packages/libraries: pip install -r requirements.txt
 
-## Current task:
-
-- setup the training pipeline (done)
-- setup the http server (done)
-- setup the prediction pipeline as well (pending)
-
   ## How to run the server?
 
   1. Setup your python environment

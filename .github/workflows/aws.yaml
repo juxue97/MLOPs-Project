@@ -53,6 +53,16 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Deploy with Docker Compose
+        env:
+          MONGO_DB_URL_KEY: ${{ secrets.MONGO_DB_URL_KEY }}
+          MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
+          MONGO_DB_COLLECTION: ${{ secrets.MONGO_DB_COLLECTION }}
+          AWS_ACCESS_KEY_ID_ENV_KEY: ${{ secrets.AWS_ACCESS_KEY_ID_ENV_KEY }}
+          AWS_SECRET_ACCESS_KEY_ENV_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ENV_KEY }}
+          AWS_REGION_NAME: ${{ secrets.AWS_REGION_NAME }}
+          APP_HOST: ${{ secrets.APP_HOST }}
+          APP_PORT: ${{ secrets.APP_PORT }}
+
         run: |
           docker pull "${{ steps.login-ecr.outputs.registry }}"/"${{ secrets.ECR_REPO }}":latest
           docker compose down  # Stop any running containers

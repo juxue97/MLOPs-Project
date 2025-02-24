@@ -6,19 +6,19 @@ services:
     ports:
       - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+      MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
     volumes:
       - ./mongo_data:/data/db
     networks:
       - my_network
 
   ml:
-    build: .
-    image: ml:latest # Optional but useful
+    # image: ml:latest # Optional but useful
+    image: ${{ secrets.ECR_REPO }}:latest # ECR image pulled in CI/CD workflow
     container_name: ml_service # Optional for fixed container name
     restart: always
-    env_file: .env
+    # env_file: .env
     ports:
       - 4060:4060
     depends_on:

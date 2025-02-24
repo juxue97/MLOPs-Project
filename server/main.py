@@ -29,6 +29,7 @@ async def health_check():
     except Exception as e:
         raise Exception(f"Error starting http server : {e}")
 
+# routers
 app.include_router(routerTrain)
 app.include_router(routerPred)
 

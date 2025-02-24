@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from us_visa.pipline.training_pipeline import TrainPipeline
 
 
-async def train():
+async def train() -> JSONResponse:
     try:
         pipeline = TrainPipeline()
         pipeline.run_pipeline()

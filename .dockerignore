@@ -54,3 +54,4 @@ data/
 models/
 *.npy
 *.pkl
+*.sh

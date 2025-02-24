@@ -15,7 +15,7 @@ services:
 
   ml:
     # image: ml:latest # Optional but useful
-    image: ${ECR_REPO}:latest # ECR image pulled in CI/CD workflow
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest # ECR image pulled in CI/CD workflow
     container_name: ml_service # Optional for fixed container name
     restart: always
     # env_file: .env

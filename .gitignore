@@ -32,9 +32,8 @@ docker-compose.yml
 mongo_data/
 
 # GitHub Actions
-.github/
-*.yml
-*.yaml
+.github/  # Keep this if you want to exclude ALL GitHub Actions
+!.github/workflows/  # Keep GitHub Actions workflows in Git
 
 # CI/CD build directories
 /build/

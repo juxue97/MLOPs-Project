@@ -1,0 +1,30 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - ./mongo_data:/data/db
+    networks:
+      - my_network
+
+  ml:
+    build: .
+    image: ml:latest # Optional but useful
+    container_name: ml_service # Optional for fixed container name
+    restart: always
+    env_file: .env
+    ports:
+      - 4060:4060
+    depends_on:
+      - mongodb
+    networks:
+      - my_network
+
+networks:
+  my_network:

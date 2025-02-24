@@ -18,7 +18,16 @@ services:
     image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest # ECR image pulled in CI/CD workflow
     container_name: ml_service # Optional for fixed container name
     restart: always
-    # env_file: .env
+    environment:
+      MONGO_DB_URL_KEY: ${MONGO_DB_URL_KEY}
+      MONGO_DB_NAME: ${MONGO_DB_NAME}
+      MONGO_DB_COLLECTION: ${MONGO_DB_COLLECTION}
+      AWS_ACCESS_KEY_ID_ENV_KEY: ${AWS_ACCESS_KEY_ID_ENV_KEY}
+      AWS_SECRET_ACCESS_KEY_ENV_KEY: ${AWS_SECRET_ACCESS_KEY_ENV_KEY}
+      AWS_REGION_NAME: ${AWS_REGION_NAME}
+      APP_HOST: ${APP_HOST}
+      APP_PORT: ${APP_PORT}
+
     ports:
       - 4060:4060
     depends_on:

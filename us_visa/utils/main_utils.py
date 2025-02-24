@@ -149,3 +149,16 @@ def load_numpy_array_data(file_path: str) -> np.array:
             return np.load(file_obj)
     except Exception as e:
         raise USvisaException(e, sys) from e
+
+
+def result_mapping(value: int) -> str:
+    try:
+        logging.info("Mapping value into str")
+        status = None
+        if value == 1:
+            status = "Visa-approved"
+        else:
+            status = "Visa-Not_approved"
+        return status
+    except Exception as e:
+        raise USvisaException(e, sys)

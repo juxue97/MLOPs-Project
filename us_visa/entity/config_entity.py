@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 import os
+from typing import Optional
 
 from us_visa.constants import *
 
@@ -80,3 +81,23 @@ class ModelEvaluationConfig:
 class ModelPusherConfig:
     bucketName: str = MODEL_BUCKET_NAME
     s3ModelKeyPath: str = MODEL_FILE_NAME
+
+
+@dataclass
+class USVisaPredictConfig:
+    model_file_path: str = MODEL_FILE_NAME
+    model_bucket_name: str = MODEL_BUCKET_NAME
+
+
+@dataclass
+class PredictConfig:
+    continent: Optional[str] = None
+    education_of_employee: Optional[str] = None
+    has_job_experience: Optional[str] = None
+    region_of_employment: Optional[str] = None
+    unit_of_wage: Optional[str] = None
+    full_time_position: Optional[str] = None
+
+    no_of_employees: Optional[int] = None
+    company_age: Optional[int] = None
+    prevailing_wage: Optional[float] = None

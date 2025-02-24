@@ -24,4 +24,5 @@ jinja2
 python-multipart
 kagglehub
 python-dotenv
+pydantic==1.10.21
 -e .

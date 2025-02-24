@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run as app_run
 
-from server.router import routerTrain
+from server.router import routerTrain, routerPred
 from us_visa.constants import APP_HOST, APP_PORT
 
 
@@ -30,6 +30,7 @@ async def health_check():
         raise Exception(f"Error starting http server : {e}")
 
 app.include_router(routerTrain)
+app.include_router(routerPred)
 
 if __name__ == "__main__":
     app_run(app=app, host=APP_HOST, port=APP_PORT)

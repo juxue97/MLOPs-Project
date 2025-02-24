@@ -61,6 +61,6 @@ MODEL_TRAINER_MODEL_CONFIG_FILE_PATH: str = os.path.join(
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
 MODEL_BUCKET_NAME: str = "ml-models-2025"
 
-# Server Config
+# Server Config, note that the app port need to conver to int!
 APP_HOST: str = os.getenv("APP_HOST", "0.0.0.0")
 APP_PORT: int = int(os.getenv("APP_PORT", 8000))
